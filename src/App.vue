@@ -6,12 +6,13 @@
       clipped
     >
       <v-list dense>
-        <v-list-item @click="selecionarConversa">
+        <v-list-item @click="$refs.inputChat.click()">
           <v-list-item-action>
             <v-icon>mdi-chat-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Selecionar Conversa</v-list-item-title>
+            <input v-show="false" id="inputChat" ref="inputChat" type="file" accept=".txt" @change="selecionarConversa">
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -34,6 +35,9 @@
     <v-footer app>
       <span>&copy; 2019</span>
     </v-footer>
+
+  <v-snackbar v-model="notificacao.estado" :color="notificacao.cor"> {{ notificacao.texto }} </v-snackbar>
+
   </v-app>
 </template>
 
@@ -47,14 +51,29 @@
     },
     data: () => ({
       drawer: null,
-      conversaColetada: { texto: "Conversa coletada" }
+      conversaColetada: { texto: "Conversa coletada" },
+      notificacao: {
+        texto: null,
+        cor: null,
+        timeout: 5000,
+        estado: false,
+        enviar(textoNotificacao, corNotificacao){
+            this.texto = textoNotificacao
+            this.cor = corNotificacao
+            this.estado = true
+        }
+      }
     }),
     created () {
       this.$vuetify.theme.dark = true
     },
     methods: {
       selecionarConversa(){
-
+        this.conversaColetada = document.querySelector('#inputChat').files[0]
+        console.log(this.conversaColetada);
+        if(this.conversaColetada.type != 'text/plain'){
+          this.notificacao.enviar("Seu naruto", "red")
+        }
       }
     }
   }
