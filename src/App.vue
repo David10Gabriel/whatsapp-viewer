@@ -6,20 +6,12 @@
       clipped
     >
       <v-list dense>
-        <v-list-item>
+        <v-list-item @click="selecionarConversa">
           <v-list-item-action>
-            <v-icon>dashboard</v-icon>
+            <v-icon>mdi-chat-outline</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>settings</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Settings</v-list-item-title>
+            <v-list-item-title>Selecionar Conversa</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -34,7 +26,9 @@
     </v-app-bar>
 
     <v-content>
+      <ChatScreen :objConversa = "conversaColetada">
 
+      </ChatScreen>
     </v-content>
 
     <v-footer app>
@@ -44,15 +38,24 @@
 </template>
 
 <script>
+  import ChatScreen from './components/ChatScreen.vue'
+
   export default {
+    components: { ChatScreen },
     props: {
       source: String,
     },
     data: () => ({
       drawer: null,
+      conversaColetada: { texto: "Conversa coletada" }
     }),
     created () {
       this.$vuetify.theme.dark = true
     },
+    methods: {
+      selecionarConversa(){
+
+      }
+    }
   }
 </script>
