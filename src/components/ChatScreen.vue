@@ -3,14 +3,14 @@
     <v-layout text-center wrap>
       <v-card>
         <!-- <pre> {{ arrayConversa }} </pre/> -->
-        <v-flex v-for="mensagem in arrayConversa" :key="mensagem" >
+        <v-flex v-for="mensagem in arrayConversa" :key="mensagem.texto" >
           <v-tooltip top>
             <template v-slot:activator="{ on }">
               <v-chip color="darkgrey" pill v-on="on"> 
-                <v-avatar left color="blue"> P </v-avatar> {{ mensagem }}
+                <v-avatar left color="blue"> P </v-avatar> {{ mensagem.texto }}
               </v-chip>
             </template>
-            <span>Seu naruto</span>
+            <span>{{ mensagem.data }}</span>
           </v-tooltip>
         </v-flex>  
       </v-card>
@@ -44,6 +44,17 @@ export default {
     carregarChat(){
       if (!this.arquivoConversa){ return false }
       this.arrayConversa = this.arrayConversa.split("\n")
+      let arrayAuxiliar = []
+
+      this.arrayConversa.forEach(mensagem => {
+        arrayAuxiliar.push({
+          texto: mensagem,
+          data: mensagem.split("]")[0].replace("[", "")
+        })
+      });
+
+      this.arrayConversa = arrayAuxiliar
+
       console.log(this.arrayConversa)
     }
 
