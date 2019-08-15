@@ -1,10 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      clipped
-    >
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
         <v-list-item @click="$refs.inputChat.click()">
           <v-list-item-action>
@@ -18,25 +14,20 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      clipped-left
-    >
+    <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <ChatScreen :arquivoConversa = "conversaColetada">
-
-      </ChatScreen>
+      <ChatScreen :arquivoConversa = "conversaColetada"></ChatScreen>
     </v-content>
 
     <v-footer app>
-      <span>&copy; 2019</span>
+      <span>&copy; {{new Date().getFullYear()}}</span>
     </v-footer>
 
-  <v-snackbar v-model="notificacao.estado" :color="notificacao.cor"> {{ notificacao.texto }} </v-snackbar>
+    <v-snackbar v-model="notificacao.estado" :color="notificacao.cor"> {{ notificacao.texto }} </v-snackbar>
 
   </v-app>
 </template>

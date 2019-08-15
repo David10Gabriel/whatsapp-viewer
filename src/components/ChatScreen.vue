@@ -1,19 +1,25 @@
 <template>
   <v-container>
-    <v-layout text-center wrap>
-      <v-card>
-        <!-- <pre> {{ arrayConversa }} </pre/> -->
-        <v-flex v-for="mensagem in arrayConversa" :key="mensagem.texto" >
-          <v-tooltip top>
-            <template v-slot:activator="{ on }">
-              <v-chip color="darkgrey" pill v-on="on"> 
-                <v-avatar left color="blue"> P </v-avatar> {{ mensagem.texto }}
-              </v-chip>
-            </template>
-            <span>{{ mensagem.data }}</span>
-          </v-tooltip>
-        </v-flex>  
-      </v-card>
+    <v-layout wrap>
+      <v-flex xs12>
+        <v-card>
+          <v-card-text>
+          <v-flex v-for="mensagem in arrayConversa" :key="mensagem.texto" :text-right="mensagem.texto.includes('David')">
+            <v-tooltip top>
+              <template v-slot:activator="{ on }">
+                <v-chip v-if="mensagem.texto.includes('David')" color="darkgrey" pill v-on="on"> 
+                  {{ mensagem.texto }}<v-avatar right color="blue">P</v-avatar>
+                </v-chip>
+                <v-chip v-else color="darkgrey" pill v-on="on"> 
+                  <v-avatar left color="blue">P</v-avatar>{{ mensagem.texto }}
+                </v-chip>
+              </template>
+              <span>{{ mensagem.remetente }}</span>
+            </v-tooltip>
+          </v-flex>  
+          </v-card-text>  
+        </v-card>
+      </v-flex>  
     </v-layout>
   </v-container>
 </template>
@@ -48,14 +54,13 @@ export default {
 
       this.arrayConversa.forEach(mensagem => {
         arrayAuxiliar.push({
-          texto: mensagem,
+          texto: mensagem.split(":").slice(3, 10000).join(),
           data: mensagem.split("]")[0].replace("[", "")
+          // remetente: mensagem.split(":")[2].split("]")[1],
         })
       });
 
       this.arrayConversa = arrayAuxiliar
-
-      console.log(this.arrayConversa)
     }
 
   },
