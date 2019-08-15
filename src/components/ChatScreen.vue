@@ -2,7 +2,7 @@
   <v-container>
     <v-layout text-center wrap>
       <v-card>
-        <pre> {{ objConversa }} </pre>
+        <pre> {{ arquivoConversa }} </pre>
           <h1>teste</h1>
       </v-card>
     </v-layout>
@@ -12,15 +12,35 @@
 <script>
 export default {
   props: {
-    objConversa: Object
+    arquivoConversa: File
   },
 
   data: () => ({
+    arrayConversa: {}
     
   }),
   methods: {
+    
+    lerArquivoConversa(arquivoConversa){
+      if (!arquivoConversa){ return false }
+
+      let reader = new FileReader()
+
+      reader.onload = (event) => {
+        this.arrayConversa = event.target.result
+        this.carregarChat(this.arrayConversa)
+      }
+      reader.readAsText(arquivoConversa)
+    },
     carregarChat(){
-      console.log("Teste carregar chat");
+      if (!this.arquivoConversa){ return false }
+      console.log(this.arrayConversa)
+    }
+
+  },
+  watch: {
+    arquivoConversa: function(valor){
+      this.lerArquivoConversa(valor)
     }
   }
 };

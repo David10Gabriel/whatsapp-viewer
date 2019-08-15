@@ -27,7 +27,7 @@
     </v-app-bar>
 
     <v-content>
-      <ChatScreen :objConversa = "conversaColetada">
+      <ChatScreen :arquivoConversa = "conversaColetada">
 
       </ChatScreen>
     </v-content>
@@ -51,7 +51,7 @@
     },
     data: () => ({
       drawer: null,
-      conversaColetada: { texto: "Conversa coletada" },
+      conversaColetada: null,
       notificacao: {
         texto: null,
         cor: null,
@@ -70,10 +70,10 @@
     methods: {
       selecionarConversa(){
         this.conversaColetada = document.querySelector('#inputChat').files[0]
-        console.log(this.conversaColetada);
         if(this.conversaColetada.type != 'text/plain'){
-          this.notificacao.enviar("Seu naruto", "red")
+          this.notificacao.enviar("Selecione um arquivo do tipo texto", "red")
         }
+      
       }
     }
   }
