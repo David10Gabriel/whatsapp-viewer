@@ -2,8 +2,17 @@
   <v-container>
     <v-layout text-center wrap>
       <v-card>
-        <pre> {{ arquivoConversa }} </pre>
-          <h1>teste</h1>
+        <!-- <pre> {{ arrayConversa }} </pre/> -->
+        <v-flex v-for="mensagem in arrayConversa" :key="mensagem" >
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-chip color="darkgrey" pill v-on="on"> 
+                <v-avatar left color="blue"> P </v-avatar> {{ mensagem }}
+              </v-chip>
+            </template>
+            <span>Seu naruto</span>
+          </v-tooltip>
+        </v-flex>  
       </v-card>
     </v-layout>
   </v-container>
@@ -34,6 +43,7 @@ export default {
     },
     carregarChat(){
       if (!this.arquivoConversa){ return false }
+      this.arrayConversa = this.arrayConversa.split("\n")
       console.log(this.arrayConversa)
     }
 
